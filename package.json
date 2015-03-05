@@ -1,0 +1,29 @@
+{
+  "name": "grunt-codeblock-jshint",
+  "version": "0.1.0",
+  "contributors": [
+    {
+      "name": "K.Adam White"
+    },
+    {
+      "name": "Tim Branyen"
+    }
+  ],
+  "license": "MIT",
+  "description": "Run JSHint against code snippets within Markdown slides",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "keywords": [
+    "gruntplugin"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "peerDependencies": {
+    "grunt": ">=0.4.0"
+  },
+  "dependencies": {
+    "jshint": "^2.6.3"
+  }
+}
