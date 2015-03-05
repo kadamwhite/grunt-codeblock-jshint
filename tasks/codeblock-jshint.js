@@ -15,6 +15,8 @@ module.exports = function( grunt ) {
       reporter: defaultReporter
     });
 
+    var reporter = options.reporter;
+
     // Process all slides markdown files and turn into token lists from marked.
     function convertToTokens( file ) {
       var contents = grunt.file.read( file );
@@ -49,6 +51,7 @@ module.exports = function( grunt ) {
 
     var results = markdownTokens.reduce( reduceToJSHintErrors, []);
 
+    // Log results
     reporter( results );
 
     if ( results.length ) {
