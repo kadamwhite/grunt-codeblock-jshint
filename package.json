@@ -1,6 +1,10 @@
 {
   "name": "grunt-codeblock-jshint",
   "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kadamwhite/grunt-codeblock-jshint.git"
+  },
   "contributors": [
     {
       "name": "K.Adam White"
