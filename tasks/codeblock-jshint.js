@@ -2,93 +2,68 @@
 
 var path = require( 'path' );
 var JSHint = require( 'jshint' ).JSHINT;
-var defaultReporter = require( 'jshint/src/reporters/default' ).reporter;
-var marked = require( 'marked' );
+var tokenizeMarkdown = require( 'tokenize-markdown' );
+var contribJSHint = require( './lib/jshint' );
 
 module.exports = function( grunt ) {
   var desc = 'Run JSHint against code snippets within Markdown slides.';
 
-  grunt.registerTask( 'codeblock-jshint', desc, function codeBlockJSHintTask() {
+  grunt.registerMultiTask( 'codeblock-jshint', desc, function codeBlockJSHintTask() {
+    var done = this.async();
+
     // Get any configured options, defaulting the search paths to any markdown
     // files below the working directory other than those in node_modules
     var options = this.options({
-      src: [
-        '**/*.md',
-        '!node_modules/**/*.md'
-      ]
+      force: false
     });
 
-    var reporter;
+    // If force is true, report JSHint errors but dont fail the task
+    var force = options.force;
+    delete options.force;
 
-    // Attempt to apply a provided reporter
-    if ( ! options.reporter ) {
-      // If no configuration was supplied, use the default
-      reporter = defaultReporter;
-    } else if ( typeof options.reporter === 'string' ) {
-      // Otherwise, if a string was provided, attempt to load the reporter from
-      // a module path string in the manner that grunt-contrib-jshint does
-      options.reporter = path.resolve( process.cwd(), options.reporter );
-      try {
-        reporter = require( options.reporter ).reporter;
-      } catch ( err ) {
-        grunt.fatal( err );
-      }
-    } else if ( typeof options.reporter === 'function' ) {
-      // Handle cases like `reporter: function myCustomReporter() {}`
-      reporter = options.reporter;
-    } else {
-      // Fall back to the default reporter
-      reporter = defaultReporter;
-    }
+    // Use logic borrowed from grunt-contrib-jshint to select the reporter to use
+    var reporter = contribJSHint.init( grunt ).selectReporter( options );
 
-    // Process all slides markdown files and turn into token lists from marked.
-    function convertToTokens( file ) {
-      var contents = grunt.file.read( file );
-      var tokens = marked.lexer( contents );
+    // Process all slides markdown files and turn into token lists from marked,
+    // filtering the returned tokens down to only JS files
+    var markdownTokens = tokenizeMarkdown.fromFiles( this.filesSrc, {
+      type: 'code',
+      lang: /(js|javascript)/
+    });
 
-      return {
-        file: file,
-        tokens: tokens
-      };
-    }
+    /**
+     * Reducer function to run JSHint against each file's tokens and aggregate any errors
+     *
+     * @param  {Array}  errors Reducer memo array, collecting any JSHint errors
+     * @param  {Object} item   The item defining the tokens for a given file
+     * @return {Array}         An array of aggregated JSHint errors
+     */
+    var results = markdownTokens.reduce(function reduceToJSHintErrors( errors, file ) {
 
-    var markdownTokens = grunt.file.expand( options.src ).map( convertToTokens );
-
-    // Utility for filtering out tokens that don't represent code blocks
-    function onlyJSTokens( token ) {
-      return token.type === 'code' && token.lang === 'javascript';
-    }
-
-    // Filter each token list and make list of JSHint files to run on.
-    function reduceToJSHintErrors( memo, item ) {
-
-      function evaluateToken( snippet ) {
+      // For each code file, run JSHint and see if it fails.
+      file.tokens.forEach(function evaluateToken( snippet ) {
         var didFail = ! JSHint.jshint( snippet.text );
 
         if ( didFail && JSHint.errors.length ) {
           // Add each identified error to the output
           JSHint.errors.forEach(function recordError( error ) {
-            memo.push({
-              file: item.file,
+            errors.push({
+              // File path
+              file: file.file,
+              // JSHint error object
               error: error
             });
           });
         }
-      }
+      });
 
-      // For each code file, run JSHint and see if it fails.
-      item.tokens.filter( onlyJSTokens ).forEach( evaluateToken );
-
-      return memo;
-    }
-
-    var results = markdownTokens.reduce( reduceToJSHintErrors, [] );
+      return errors;
+    }, [] );
 
     // Log results
     reporter( results );
 
-    if ( results.length ) {
-      throw new Error( results.length + ' errors' );
-    }
+    // // Fail task if errors were logged unless force is set
+    done( ! results.length || force );
   });
 };

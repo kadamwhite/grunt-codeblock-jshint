@@ -1,5 +1,6 @@
 // Copied from grunt-contrib-jshint/tasks/lib/jshint
-// ========================================================
+// TODO: If this ever gets extracted from grunt-contrib-jshint, refactor this!
+// ============================================================================
 /*
  * grunt-contrib-jshint
  * http://gruntjs.com/
@@ -72,19 +73,11 @@ exports.init = function(grunt) {
 
   // Default Grunt JSHint reporter
   exports.reporter = function(results, data) {
-    // Dont report empty data as its an ignored file
-    if (data.length < 1) {
-      grunt.log.error('0 files linted. Please check your ignored files.');
-      return;
-    }
-
     if (results.length === 0) {
       // Success!
       grunt.verbose.ok();
       return;
     }
-
-    var options = data[0].options;
 
     grunt.log.writeln();
 
@@ -107,11 +100,12 @@ exports.init = function(grunt) {
         // Manually increment errorcount since we're not using grunt.log.error().
         grunt.fail.errorcount++;
 
-        // No idea why JSHint treats tabs as options.indent # characters wide, but it
+        // No idea why JSHint treats tabs as indent # characters wide, but it
         // does. See issue: https://github.com/jshint/jshint/issues/430
         // Replacing tabs with appropriate spaces (i.e. columns) ensures that
         // caret will line up correctly.
-        var evidence = e.evidence.replace(/\t/g,grunt.util.repeat(options.indent,' '));
+        var indent = 4;
+        var evidence = e.evidence.replace(/\t/g,grunt.util.repeat( indent, ' '));
 
         grunt.log.writeln((pad(e.line.toString(),7) + ' |') + evidence.grey);
         grunt.log.write(grunt.util.repeat(9,' ') + grunt.util.repeat(e.character -1,' ') + '^ ');
