@@ -1,6 +1,5 @@
 'use strict';
 
-var path = require( 'path' );
 var JSHint = require( 'jshint' ).JSHINT;
 var tokenizeMarkdown = require( 'tokenize-markdown' );
 var contribJSHint = require( './lib/jshint' );

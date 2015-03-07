@@ -22,7 +22,8 @@
     "gruntplugin"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish": "npm test",
+    "test": "grunt lint"
   },
   "peerDependencies": {
     "grunt": ">=0.4.0"
@@ -30,6 +31,15 @@
   "dependencies": {
     "jshint": "^2.6.3",
     "tokenize-markdown": "^0.1.1"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-jshint": "^0.11.0",
+    "grunt-jscs": "^1.5.0",
+    "jscs-stylish": "^0.3.1",
+    "jshint-stylish": "^1.0.1",
+    "load-grunt-tasks": "^3.1.0"
   },
   "files": [
     "tasks"
