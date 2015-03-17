@@ -13,6 +13,7 @@ module.exports = function( grunt ) {
     // Get any configured options, defaulting the search paths to any markdown
     // files below the working directory other than those in node_modules
     var options = this.options({
+      lang: /(js|javascript)/,
       force: false
     });
 
@@ -27,7 +28,7 @@ module.exports = function( grunt ) {
     // filtering the returned tokens down to only JS files
     var markdownTokens = tokenizeMarkdown.fromFiles( this.filesSrc, {
       type: 'code',
-      lang: /(js|javascript)/
+      lang: options.lang
     });
 
     /**
