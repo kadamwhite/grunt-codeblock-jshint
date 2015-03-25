@@ -19,7 +19,7 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks( 'grunt-codeblock-jshint' );
 ```
 
-## The "codeblock_jshint" task
+## The "codeblock-jshint" task
 
 ### Overview
 In your project's Gruntfile, add a section named `'codeblock-jshint'` to the data object passed into `grunt.initConfig()`.
@@ -54,13 +54,13 @@ the provided directory are scanned for code blocks to lint.
 ```js
 grunt.initConfig({
   'codeblock-jshint': {
-    options: {},
     src: './path/to/some/markdown/files/**/*.md'
   }
 });
 ```
 
 #### Multiple Targets
+
 In this example, two different directories of markdown files are scanned, and
 results from one of them are logged with a custom JSHint reporter
 
@@ -84,7 +84,10 @@ grunt.initConfig({
 ```
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+
+Lint and test your code using the `npm test` command. In lieu of a formal styleguide, JSHint and JSCS are in place to ensure code style consistency. Add unit tests for any new or changed functionality.
 
 ## Release History
-_(Nothing yet)_
+
+- **v0.2.1**: `lang` option is now configurable with a regex or string
+- **v0.1.0**: Initial release
