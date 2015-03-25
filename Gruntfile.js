@@ -1,6 +1,8 @@
 module.exports = function( grunt ) {
   'use strict';
 
+  var merge = require( 'lodash.merge' );
+
   // Reusable JSHintRC options
   var jshintrc = grunt.file.readJSON( '.jshintrc' );
 
@@ -21,6 +23,9 @@ module.exports = function( grunt ) {
       },
       lib: {
         src: 'tasks/**/*.js'
+      },
+      tests: {
+        src: 'tests/**/*.js'
       }
     },
 
@@ -35,6 +40,17 @@ module.exports = function( grunt ) {
       lib: {
         options: jshintrc,
         src: 'tasks/**/*.js'
+      },
+      tests: {
+        options: merge( jshintrc, {
+          globals: {
+            describe: false,
+            it: false,
+            beforeEach: false,
+            afterEach: false
+          }
+        }),
+        src: 'tests/**/*.js'
       }
     }
 

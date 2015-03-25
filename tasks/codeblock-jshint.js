@@ -63,7 +63,24 @@ module.exports = function( grunt ) {
     // Log results
     reporter( results );
 
-    // // Fail task if errors were logged unless force is set
-    done( ! results.length || force );
+    // If no errors occurred, we're green
+    var noErrors = ! results.length;
+
+    // Fail task if errors were logged, unless force is set
+    var passed = noErrors || force;
+
+    var eventType;
+
+    if ( noErrors ) {
+      eventType = 'success';
+    } else {
+      eventType = force ? 'forced' : 'error';
+    }
+
+    // Emit an event (used exclusively for testing)
+    grunt.event.emit( 'codeblock-jshint', eventType, results );
+
+    // End the task
+    done( passed );
   });
 };
