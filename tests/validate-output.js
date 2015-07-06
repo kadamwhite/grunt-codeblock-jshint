@@ -10,12 +10,12 @@ console.log( 'Validating file output...' );
 // Pairs of
 var tests = [
   {
-    expected: './fixtures/output/failing-filtered.txt',
-    actual:  '../temp/failing-filtered.txt'
+    expected: './fixtures/output/filtered.txt',
+    actual:  '../temp/filtered.txt'
   },
   {
-    expected: './fixtures/output/failing-forced.txt',
-    actual:  '../temp/failing-forced.txt'
+    expected: './fixtures/output/forced.txt',
+    actual:  '../temp/forced.txt'
   },
   {
     expected: './fixtures/output/failing.txt',
@@ -24,6 +24,10 @@ var tests = [
   {
     expected: './fixtures/output/passing.txt',
     actual:  '../temp/passing.txt'
+  },
+  {
+    expected: './fixtures/output/with-jshint-options.txt',
+    actual:  '../temp/with-jshint-options.txt'
   }
 ];
 

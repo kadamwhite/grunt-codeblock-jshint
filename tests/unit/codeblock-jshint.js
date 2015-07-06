@@ -127,6 +127,45 @@ describe( 'codeblock-jshint.js', function() {
       return expect( taskDone ).to.be.rejected;
     });
 
+    it( 'can be configured with specific JSHint options', function() {
+
+      // Enqueue the 'codeblock-jshint' task
+      grunt.task.run( 'codeblock-jshint' );
+
+      // Set task options
+      grunt.initConfig({
+        'codeblock-jshint': {
+          options: {
+            jshintOptions: {
+              // Relaxing options that will make the "failing" fixture actually pass
+              asi: true,
+              eqnull: true
+            }
+          },
+          src: [ 'tests/fixtures/input/failing.md' ]
+        }
+      });
+
+      // Run the task queue
+      grunt.task.start();
+
+      // Verify that, with these JSHint settings, the promise is fulfilled
+      var completion = taskDone.then(function( result ) {
+        expect( result ).to.have.property( 'status' );
+        expect( result.status ).to.equal( 'success' );
+
+        expect( result ).to.have.property( 'results' );
+        expect( result.results ).to.have.property( 'length' );
+        expect( result.results.length ).to.equal( 0 );
+
+        // Provide a message indicating test is over
+        return 'done';
+      });
+
+      // Ensure taskDone is resolved
+      return expect( completion ).to.eventually.become( 'done' );
+    });
+
     it( 'passes even if errors are present when --force is specified', function() {
 
       // Enqueue the 'codeblock-jshint' task

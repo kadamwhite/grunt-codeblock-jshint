@@ -22,6 +22,7 @@
     "gruntplugin"
   ],
   "scripts": {
+    "regenerate-fixtures": "./tests/regenerate-output-fixtures.sh",
     "publish": "npm test",
     "lint": "grunt lint",
     "pretest": "npm run lint",

@@ -51,15 +51,16 @@ function tokenizeFile( options, fileObj ) {
 /**
  * Reducer function to run JSHint against each file's tokens and aggregate any errors
  *
- * @param  {Array}  errors Reducer memo array, collecting any JSHint errors
- * @param  {Object} item   The item defining the tokens for a given file
- * @return {Array}         An array of aggregated JSHint errors
+ * @param  {Object} options An object specifying the JSHint options to use
+ * @param  {Array}  errors  Reducer memo array, collecting any JSHint errors
+ * @param  {Object} item    The item defining the tokens for a given file
+ * @return {Array} An array of aggregated JSHint errors
  */
-function reduceToJSHintErrors( errors, file ) {
+function reduceToJSHintErrors( options, errors, file ) {
 
   // For each code file, run JSHint and see if it fails.
   file.tokens.forEach(function evaluateToken( snippet ) {
-    var didFail = ! JSHint.jshint( snippet.text );
+    var didFail = ! JSHint.jshint( snippet.text, options );
 
     if ( didFail && JSHint.errors.length ) {
       // Add each identified error to the output
@@ -105,7 +106,8 @@ module.exports = function( grunt ) {
       // Convert each file to Markdown tokens
       .map( tokenizeFile.bind( null, options ) )
       // Process each files' tokens with JSHint and return a unified error list
-      .reduce( reduceToJSHintErrors, [] );
+      // (use .bind to pass the reducer method any provided JSHint options)
+      .reduce( reduceToJSHintErrors.bind( null, options.jshintOptions ), [] );
 
     // Log results
     reporter( results );

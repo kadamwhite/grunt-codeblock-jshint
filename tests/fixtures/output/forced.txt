@@ -1,4 +1,4 @@
-[4mRunning "codeblock-jshint:failing-forced" (codeblock-jshint) task[24m
+[4mRunning "codeblock-jshint:forced" (codeblock-jshint) task[24m
 
 [1m[22m
       2 |[90mvar message = 'Where did my semicolon go'[39m

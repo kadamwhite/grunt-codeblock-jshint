@@ -1,9 +1,9 @@
-[4mRunning "codeblock-jshint:failing-filtered" (codeblock-jshint) task[24m
+[4mRunning "codeblock-jshint:filtered" (codeblock-jshint) task[24m
 
 [1m[22m
       2 |[90mvar message = 'Where did my semicolon go'[39m
                                                   ^ Missing semicolon.
 
-[33mWarning: Task "codeblock-jshint:failing-filtered" failed. Use --force to continue.[39m
+[33mWarning: Task "codeblock-jshint:filtered" failed. Use --force to continue.[39m
 
 [31mAborted due to warnings.[39m

@@ -28,19 +28,30 @@ module.exports = function( grunt ) {
           'tests/fixtures/input/failing.md'
         ]
       },
-      'failing-filtered': {
+      filtered: {
         options: {
-          // We only check syntax for markdown blocks with language "javascript":
-          // to opt-out of the syntax checking, use language "js"
+          // Only run blocks with language "javascript" through jshint (skip "js")
           lang: 'javascript'
         },
         src: [
           'tests/fixtures/input/failing.md'
         ]
       },
-      'failing-forced': {
+      forced: {
         options: {
           force: true
+        },
+        src: [
+          'tests/fixtures/input/failing.md'
+        ]
+      },
+      'with-jshint-options': {
+        options: {
+          // Custom JSHint configuration
+          jshintOptions: {
+            asi: true,
+            eqnull: true
+          }
         },
         src: [
           'tests/fixtures/input/failing.md'
