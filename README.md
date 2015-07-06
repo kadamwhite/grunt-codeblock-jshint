@@ -45,6 +45,11 @@ Type: `String|Function`
 The path to a custom JSHint reporter, or else a custom reporter function
 to use when logging the output from JSHint
 
+#### options.jshintOptions
+Type: `Object`
+
+An object specifying JSHint rules that will be used when validating the code tokens
+
 ### Usage Examples
 
 #### Default Options
@@ -83,11 +88,31 @@ grunt.initConfig({
 });
 ```
 
+#### Custom JSHint options
+In this example, several non-default JSHint options are passed in and will be used when checking the specified files.
+
+```js
+grunt.initConfig({
+  'codeblock-jshint': {
+    options: {
+      jshintOptions: {
+        curly: true,
+        undef: true
+      }
+    },
+    src: './path/to/some/markdown/files/**/*.md'
+  }
+});
+```
+
 ## Contributing
 
 Lint and test your code using the `npm test` command. In lieu of a formal styleguide, JSHint and JSCS are in place to ensure code style consistency. Add unit tests for any new or changed functionality.
 
+Note: `npm test` may not complete on Windows systems; while this plugin has been tested on Windows, the test harness itself depends on a shell script that requires an OSX or Linux environment to run.
+
 ## Release History
 
+- **v0.3.0**: `jshintOptions` option now enables custom JSHint configuration options to be specified
 - **v0.2.1**: `lang` option is now configurable with a regex or string
 - **v0.1.0**: Initial release
