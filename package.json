@@ -23,10 +23,11 @@
   ],
   "scripts": {
     "regenerate-fixtures": "./tests/regenerate-output-fixtures.sh",
+    "validate-output": "node tests/validate-output.js",
     "publish": "npm test",
     "lint": "grunt lint",
     "pretest": "npm run lint",
-    "test": "mocha tests/unit && ./tests/test.sh"
+    "test": "mocha tests/unit && npm run validate-output"
   },
   "peerDependencies": {
     "grunt": ">=0.4.0"
@@ -38,7 +39,7 @@
   "devDependencies": {
     "bluebird": "^2.9.14",
     "chai": "^2.1.2",
-    "chai-as-promised": "^4.3.1",
+    "chai-as-promised": "^5.1.0",
     "chalk": "^1.1.0",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
@@ -49,6 +50,7 @@
     "load-grunt-tasks": "^3.1.0",
     "lodash.merge": "^3.0.3",
     "mocha": "^2.2.1",
+    "rsvp": "^3.0.18",
     "sinon": "^1.14.1"
   },
   "files": [

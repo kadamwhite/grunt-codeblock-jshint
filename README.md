@@ -109,8 +109,6 @@ grunt.initConfig({
 
 Lint and test your code using the `npm test` command. In lieu of a formal styleguide, JSHint and JSCS are in place to ensure code style consistency. Add unit tests for any new or changed functionality.
 
-Note: `npm test` may not complete on Windows systems; while this plugin has been tested on Windows, the test harness itself depends on a shell script that requires an OSX or Linux environment to run.
-
 ## Release History
 
 - **v0.3.0**: `jshintOptions` option now enables custom JSHint configuration options to be specified
