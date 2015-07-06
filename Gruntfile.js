@@ -9,9 +9,44 @@ module.exports = function( grunt ) {
   // Load tasks.
   require( 'load-grunt-tasks' )( grunt );
 
+  // Load the codeblock-jshint task itself
+  grunt.loadTasks( 'tasks' );
+
   grunt.initConfig({
 
     pkg: grunt.file.readJSON( 'package.json' ),
+
+    // These definitions are used to test the output of the plugin
+    'codeblock-jshint': {
+      passing: {
+        src: [
+          'tests/fixtures/input/passing.md'
+        ]
+      },
+      failing: {
+        src: [
+          'tests/fixtures/input/failing.md'
+        ]
+      },
+      'failing-filtered': {
+        options: {
+          // We only check syntax for markdown blocks with language "javascript":
+          // to opt-out of the syntax checking, use language "js"
+          lang: 'javascript'
+        },
+        src: [
+          'tests/fixtures/input/failing.md'
+        ]
+      },
+      'failing-forced': {
+        options: {
+          force: true
+        },
+        src: [
+          'tests/fixtures/input/failing.md'
+        ]
+      }
+    },
 
     jscs: {
       options: {

@@ -1,0 +1,3 @@
+[4mRunning "codeblock-jshint:passing" (codeblock-jshint) task[24m
+
+[32mDone, without errors.[39m

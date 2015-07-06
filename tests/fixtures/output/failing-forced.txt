@@ -1,0 +1,10 @@
+[4mRunning "codeblock-jshint:failing-forced" (codeblock-jshint) task[24m
+
+[1m[22m
+      2 |[90mvar message = 'Where did my semicolon go'[39m
+                                                  ^ Missing semicolon.
+      2 |[90mif ( 'we compare with null with not-threequals' == null ) {[39m
+                                                         ^ Use '===' to compare with 'null'.
+
+
+[32mDone, without errors.[39m

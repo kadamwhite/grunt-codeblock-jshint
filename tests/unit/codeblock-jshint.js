@@ -84,7 +84,7 @@ describe( 'codeblock-jshint.js', function() {
       // Set task options
       grunt.initConfig({
         'codeblock-jshint': {
-          src: [ 'tests/fixtures/passing.md' ]
+          src: [ 'tests/fixtures/input/passing.md' ]
         }
       });
 
@@ -116,7 +116,7 @@ describe( 'codeblock-jshint.js', function() {
       // Set task options
       grunt.initConfig({
         'codeblock-jshint': {
-          src: [ 'tests/fixtures/failing.md' ]
+          src: [ 'tests/fixtures/input/failing.md' ]
         }
       });
 
@@ -138,7 +138,7 @@ describe( 'codeblock-jshint.js', function() {
           options: {
             force: true
           },
-          src: [ 'tests/fixtures/failing.md' ]
+          src: [ 'tests/fixtures/input/failing.md' ]
         }
       });
 
@@ -156,7 +156,7 @@ describe( 'codeblock-jshint.js', function() {
       // Set task options
       grunt.initConfig({
         'codeblock-jshint': {
-          src: [ 'tests/fixtures/failing.md' ]
+          src: [ 'tests/fixtures/input/failing.md' ]
         }
       });
 
