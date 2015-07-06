@@ -6,6 +6,8 @@ var cp = require( 'child_process' );
 var path = require( 'path' );
 var chalk = require( 'chalk' );
 var rsvp = require( 'rsvp' );
+/* global Promise:true */// Tell JSHint it's OK to redefine Promise
+var Promise = rsvp.Promise; // For older versions of node
 
 // The names of the codeblock-jshint task targets specified in the Gruntfile
 // that we should run and validate against the expected output fixtures
