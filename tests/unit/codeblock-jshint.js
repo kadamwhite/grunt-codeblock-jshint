@@ -5,8 +5,8 @@ chai.use( require( 'chai-as-promised' ) );
 var expect = chai.expect;
 var sinon = require( 'sinon' );
 
-/*jshint -W079 */// Suppress warning about redefiniton of `Promise`
-var Promise = require( 'bluebird' );
+/* global Promise:true */// Suppress warning about redefiniton of `Promise`
+var Promise = require( 'bluebird' ); // For older versions of node
 var grunt = require( 'grunt' );
 
 /**

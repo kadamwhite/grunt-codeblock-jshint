@@ -5,9 +5,9 @@ var fs = require( 'fs' );
 var cp = require( 'child_process' );
 var path = require( 'path' );
 var chalk = require( 'chalk' );
-var rsvp = require( 'rsvp' );
-/* global Promise:true */// Tell JSHint it's OK to redefine Promise
-var Promise = rsvp.Promise; // For older versions of node
+var bluebird = require( 'bluebird' );
+/* global Promise:true */// Suppress warning about redefiniton of `Promise`
+var Promise = bluebird.Promise; // For older versions of node
 
 // The names of the codeblock-jshint task targets specified in the Gruntfile
 // that we should run and validate against the expected output fixtures
@@ -77,7 +77,7 @@ function getOutputFilePath( subTask ) {
 // ============================================================================
 
 function runTaskCommand( subTask ) {
-  return new rsvp.Promise(function( resolve, reject ) {
+  return new Promise(function( resolve, reject ) {
     var command = cp.spawn( pathToGruntBinary, [
       'codeblock-jshint:' + subTask
     ]);
@@ -100,7 +100,7 @@ function runTaskCommand( subTask ) {
 
 console.log( 'Running all codeblock-jshint tasks...' );
 
-var runAllSubtasks = rsvp.all( subTasks.map( runTaskCommand ) );
+var runAllSubtasks = bluebird.all( subTasks.map( runTaskCommand ) );
 
 // HELPERS TO LOAD THE OUTPUT FILES AND THE FIXTURES
 // ============================================================================
@@ -152,7 +152,7 @@ var checkAllSubtasks = runAllSubtasks.then(function checkAllSubtaskOutput() {
     }).catch( handleError );
   }
 
-  return rsvp.all( subTasks.map( checkSubtaskOutput ) );
+  return bluebird.all( subTasks.map( checkSubtaskOutput ) );
 });
 
 checkAllSubtasks.then( cleanupTempDir ).then(function exit() {
